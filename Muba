@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Special Surprise for You ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fbc2eb 100%);
+      position: relative;
+    }
+
+    /* Floating hearts background */
+    .bg-heart {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.45);
+      font-size: 24px;
+      animation: floatUp 8s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(110vh) rotate(0deg) scale(0.8);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.8;
+      }
+      80% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-15vh) rotate(360deg) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* Main Card Container */
+    .container {
+      position: relative;
+      z-index: 10;
+      width: 90%;
+      max-width: 480px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      padding: 38px 28px;
+      border-radius: 28px;
+      box-shadow: 0 20px 45px rgba(230, 80, 120, 0.25),
+                  0 4px 12px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      transition: all 0.4s ease;
+    }
+
+    .page {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      animation: popIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .page.active {
+      display: flex;
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.92);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    h1, h2 {
+      color: #d63384;
+      font-size: 1.75rem;
+      line-height: 1.35;
+      margin-bottom: 24px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+
+    .cute-subtitle {
+      font-family: 'Caveat', cursive;
+      font-size: 1.7rem;
+      color: #e0487d;
+      margin-bottom: 8px;
+    }
+
+    /* Button Area for Page 1 */
+    .btn-zone {
+      position: relative;
+      width: 100%;
+      height: 140px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .btn {
+      padding: 14px 34px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #ff4081, #e91e63);
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(233, 30, 99, 0.4);
+      z-index: 5;
+    }
+
+    .btn-yes:hover {
+      transform: scale(1.08);
+      box-shadow: 0 10px 25px rgba(233, 30, 99, 0.55);
+    }
+
+    /* Crawling / Runaway NO button */
+    .btn-no {
+      background: #ffffff;
+      color: #ff4081;
+      border: 2px solid #ff79b0;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      position: fixed;
+      transition: left 0.2s ease, top 0.2s ease, transform 0.15s ease;
+      z-index: 9999;
+    }
+
+    /* Page 3 Premium Options List */
+    .pricing-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .plan-card {
+      background: #fff;
+      border: 2px solid #ffe1eb;
+      padding: 12px 18px;
+      border-radius: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #4a4a4a;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 3px 8px rgba(255, 182, 193, 0.15);
+    }
+
+    .plan-card:hover {
+      border-color: #ff4081;
+      background: #fff5f8;
+      transform: translateY(-2px);
+    }
+
+    .plan-price {
+      color: #e91e63;
+      font-size: 1.05rem;
+      font-weight: 900;
+    }
+
+    /* Payment Methods Section */
+    .payment-section {
+      width: 100%;
+      border-top: 2px dashed #ffb8d2;
+      padding-top: 18px;
+      text-align: left;
+    }
+
+    .payment-title {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: #a32258;
+      margin-bottom: 12px;
+      letter-spacing: 0.8px;
+      text-align: center;
+    }
+
+    .payment-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .pay-badge {
+      background: #fdf2f6;
+      border: 1px solid #ffd4e5;
+      padding: 9px 12px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #632d43;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .pay-badge:hover {
+      background: #ffe3ef;
+      border-color: #ff659b;
+      transform: scale(1.03);
+    }
+
+    .secret-dialog {
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: #ff1493;
+      font-weight: 700;
+      min-height: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Floating Hearts -->
+  <div id="heart-bg"></div>
+
+  <div class="container">
+    
+    <!-- PAGE 1 -->
+    <div id="page1" class="page active">
+      <div class="cute-subtitle">Hey Sweetheart... ✨</div>
+      <h1>my dear baby do you love me ?</h1>
+      <div class="btn-zone" id="btnZone">
+        <button class="btn btn-yes" onclick="goToPage(2)">YES</button>
+        <button class="btn btn-no" id="noBtn">NO</button>
+      </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div id="page2" class="page">
+      <div class="cute-subtitle">Hehe I knew it! 💖</div>
+      <h1>DO YOU WANT TO KNOW A SECRET ?</h1>
+      <div style="margin-top: 15px;">
+        <button class="btn btn-yes" onclick="goToPage(3)">YES</button>
+      </div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div id="page3" class="page">
+      <div class="cute-subtitle">Hold on... 🔒</div>
+      <h1 style="font-size: 1.45rem;">TO KNOW THE SECRET GET THE PREMIUM MEMBERSHIP</h1>
+      
+      <div class="pricing-list">
+        <div class="plan-card" onclick="alertPayment('1 Day Pass (₹19)')">
+          <span>1. FOR ONE DAY</span>
+          <span class="plan-price">₹19</span>
+        </div>
+        <div class="plan-card" onclick="alertPayment('1 Month Pass (₹499)')">
+          <span>2. FOR ONE MONTH</span>
+          <span class="plan-price">₹499</span>
+        </div>
+        <div class="plan-card" onclick="alertPayment('1 Year Pass (₹4999)')">
+          <span>3. FOR ONE YEAR</span>
+          <span class="plan-price">₹4999</span>
+        </div>
+        <div class="plan-card" onclick="alertPayment('Unlimited Pass (₹49999)')">
+          <span>4. FOR UNLIMITED SUBSCRIPTION</span>
+          <span class="plan-price">₹49999</span>
+        </div>
+      </div>
+
+      <div class="payment-section">
+        <div class="payment-title">PAYMENT METHODS</div>
+        <div class="payment-grid">
+          <div class="pay-badge" onclick="alertPayment('GPay')">1. GPAY</div>
+          <div class="pay-badge" onclick="alertPayment('PhonePe')">2. PHONEPE</div>
+          <div class="pay-badge" onclick="alertPayment('Paytm')">3. PAYTM</div>
+          <div class="pay-badge" onclick="alertPayment('Other Apps')">4. OTHER APPS</div>
+        </div>
+      </div>
+
+      <div class="secret-dialog" id="payMsg"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // Create animated floating hearts in the background
+    const heartBg = document.getElementById('heart-bg');
+    const heartIcons = ['❤️', '💖', '💕', '🌸', '✨', '💘'];
+    
+    for (let i = 0; i < 22; i++) {
+      const heart = document.createElement('span');
+      heart.className = 'bg-heart';
+      heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (5 + Math.random() * 5) + 's';
+      heart.style.animationDelay = (Math.random() * 5) + 's';
+      heart.style.fontSize = (16 + Math.random() * 20) + 'px';
+      heartBg.appendChild(heart);
+    }
+
+    // Switch between pages
+    function goToPage(pageNum) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const targetPage = document.getElementById('page' + pageNum);
+      if (targetPage) {
+        targetPage.classList.add('active');
+      }
+
+      // Hide the crawling NO button if we leave page 1
+      if (pageNum !== 1) {
+        noBtn.style.display = 'none';
+      }
+    }
+
+    // Crawling / Runaway NO Button Logic
+    const noBtn = document.getElementById('noBtn');
+
+    function positionNoButtonInitial() {
+      const rect = document.getElementById('btnZone').getBoundingClientRect();
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = (rect.left + rect.width * 0.65) + 'px';
+      noBtn.style.top = (rect.top + rect.height * 0.3) + 'px';
+    }
+
+    // Initial positioning once page loads
+    window.addEventListener('load', () => {
+      setTimeout(positionNoButtonInitial, 100);
+    });
+
+    // Function to move the button away
+    function escapeButton(e) {
+      const btnRect = noBtn.getBoundingClientRect();
+      const padding = 25;
+      
+      const maxX = window.innerWidth - btnRect.width - padding;
+      const maxY = window.innerHeight - btnRect.height - padding;
+
+      let randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+      let randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+      noBtn.style.position = 'fixed';
+      noBtn.style.left = `${randomX}px`;
+      noBtn.style.top = `${randomY}px`;
+    }
+
+    // Triggers when cursor hovers near or touches the NO button
+    noBtn.addEventListener('mouseenter', escapeButton);
+    noBtn.addEventListener('mouseover', escapeButton);
+    noBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      escapeButton(e);
+    });
+
+    // Fun popup message for payment clicks
+    function alertPayment(method) {
+      const msg = document.getElementById('payMsg');
+      msg.innerHTML = `💌 Payment via ${method} accepted in hugs and kisses! ❤️`;
+    }
+  </script>
+</body>
+</html>
